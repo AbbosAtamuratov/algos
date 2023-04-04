@@ -3,27 +3,35 @@ public class hw1 {
         int[] unsorted = new int[]{1, 3, 1, 5, 7, 7, 3, 2, 5, 7};
 
         printArr(unsorted);
-        selectSort(unsorted);
+        countingSort(unsorted);
         printArr(unsorted);
     }
 
-    public static void selectSort(int[] arr) {
-        int n = arr.length;
-
-        for (int i = 0; i < n - 1; i++) {
-            int minInd = i;
-
-            for (int j = i+1; j < n; j++) {
-                if (arr[j] < arr[minInd]) {
-                    minInd = j;
-                }
+    public static void countingSort(int[] arr) {
+        int maxVal = getMaxValue(arr);
+        int[] countArr = new int[maxVal + 1];
+        for (int i = 0; i < arr.length; i++) {
+            countArr[arr[i]]++;
+        }
+        int index = 0;
+        for (int i = 0; i < countArr.length; i++) {
+            while (countArr[i] > 0) {
+                arr[index++] = i;
+                countArr[i]--;
             }
-
-            int temp = arr[minInd];
-            arr[minInd] = arr[i];
-            arr[i] = temp;
         }
     }
+
+    public static int getMaxValue(int[] arr) {
+        int maxValue = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > maxValue) {
+                maxValue = arr[i];
+            }
+        }
+        return maxValue;
+    }
+
 
     public static void printArr(int[] arr){
         System.out.print("[");
